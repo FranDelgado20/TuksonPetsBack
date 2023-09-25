@@ -15,6 +15,7 @@ const ProductSchema = new mongoose.Schema({
   cantidad: {
     type: Number,
     required: true,
+    default:1
   },
 
   descripcion: {
@@ -26,6 +27,11 @@ const ProductSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+ProductSchema.methods.toJSON = function() {
+    const {__v, ...product} = this.toObject()
+    return product
+}
 
 const ModelProduct = mongoose.model('productos', ProductSchema)
 
