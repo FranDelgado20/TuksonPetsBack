@@ -1,6 +1,9 @@
+const UserModel = require("../models/user");
+
 const getAllUsers = async (req, res) => {
   try {
-    res.status(200).json({ msg: "Usuarios encontrados" });
+    const allUsers = await UserModel.find()
+    res.status(200).json({ msg: "Usuarios encontrados", allUsers });
   } catch (error) {
     res
       .status(500)
