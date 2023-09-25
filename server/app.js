@@ -14,7 +14,7 @@ class Server{
         this.app.use(cors())
     }
     routes(){
-
+        this.app.use('/products', require('../routes/products'))
     }
     listen(){
         this.app.listen(process.env.PORT, () => {
