@@ -1,7 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-
 class Server{
     constructor(){
         this.app = express()
@@ -14,6 +13,7 @@ class Server{
         this.app.use(cors())
     }
     routes(){
+        this.app.use("/users", require("../routes/users"))
         this.app.use('/products', require('../routes/products'))
     }
     listen(){
