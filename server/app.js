@@ -1,11 +1,23 @@
 const express = require('express')
+const morgan = require('morgan')
+const cors = require('cors')
 
 class Server{
     constructor(){
         this.app = express()
+        this.middleware()
+        this.routes()
+    }
+    middleware(){
+        this.app.use(express.json())
+        this.app.use(morgan('dev'))
+        this.app.use(cors())
+    }
+    routes(){
+
     }
     listen(){
-        this.app.listen(1944, () => {
+        this.app.listen(process.env.PORT, () => {
             console.log("Servidor en línea")
         })
     }
