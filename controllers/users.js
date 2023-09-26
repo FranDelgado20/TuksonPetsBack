@@ -1,6 +1,7 @@
 const UserModel = require("../models/user");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -47,7 +48,7 @@ const createUser = async (req, res) => {
 
     await newUser.save();
 
-    res.status(200).json({ msg: "Usuario creado correctamente", newUser });
+    res.status(201).json({ msg: "Usuario creado correctamente", newUser });
   } catch (error) {
     res.status(500).json({ msg: "No se pudo crear el usuario", error });
   }
@@ -84,10 +85,43 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const loginUser = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ msg: errors.array() });
+  }
+  try {
+    const userExist = await UserModel.findOne({ email: req.body.email });
+    if (!userExist) {
+      return res.status(422).json({ msg: "El usuario no existe" });
+    }
+
+    const passCheck = bcrypt.compare(req.body.pass, userExist.pass);
+
+    if (passCheck) {
+      const payload_jwt = {
+        user: {
+          id: userExist._id,
+          role: userExist.role,
+        },
+      };
+      const token = jwt.sign(payload_jwt, process.env.SECRET_KEY);
+
+      res.status(200).json({ msg: "Usuario logueado", userExist, token });
+    } else {
+      res.status(422).json({ msg: "Email y/o contraseña incorrectos" });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: "No se pudo iniciar sesión", error });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getOneUser,
   createUser,
   updateUser,
   deleteUser,
+  loginUser,
 };
