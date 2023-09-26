@@ -5,6 +5,7 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  loginUser,
 } = require("../controllers/users");
 const { check } = require("express-validator");
 const router = express.Router();
@@ -36,6 +37,14 @@ router.post(
     }),
   ],
   createUser
+);
+router.post(
+  "/login",
+  [
+    check("email", "El campo Email vacío").notEmpty(),
+    check("pass", "El campo contraseña vacío").notEmpty(),
+  ],
+  loginUser
 );
 router.put(
   "/:id",
