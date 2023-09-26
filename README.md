@@ -23,6 +23,6 @@ Hola muy buenas! Nuestro proyecto "Tukson Pets" se refiere a una clínica veteri
   <ol>
   <li>Clonar el repositorio del proyecto, para ello debes utilizar una consola de comandos (Windows Powershell, GitBash, VSCode) y utilizar el comando: "git clone https://github.com/FranDelgado20/TuksonPetsBack"</li>
   <li>Instalar todas las dependencias que posee el proyecto, para ello utiliza el comando: "npm install" o "npm i"</li>
-  <li>Para iniciar el servidor, utiliza el comando: "npm run dev" (con este comando el servidor se abre usando la librería Nodemon, en caso de que quieras hacer modificaciones)</li>
+  <li>Para iniciar el servidor, utiliza el comando: "npm run dev" (con este comando el servidor se abre usando la librería Nodemon, en caso de que quieras hacer modificaciones) o "npm run start" (en caso de que solo quieras iniciar el servidor sin hacer cambios mientras esté abierto)</li>
   </ol>
   Y listo! Con esto tendrás el servidor del proyecto instalado y corriendo en tu PC.
