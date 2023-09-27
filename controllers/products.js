@@ -1,5 +1,6 @@
 const ModelProduct = require('../models/products')
 const {validationResult} = require('express-validator')
+
 const getAllProducts = async(req, res) => {
     try {
        const getProducts = await ModelProduct.find()
@@ -31,6 +32,7 @@ const createProduct = async(req, res) => {
         const newProduct = new ModelProduct(body)
         await newProduct.save()
         res.status(201).json({msg:'Producto creado correctamente', newProduct})
+        
     } catch (error) {
         res.status(500).json({msg: 'Hubo un error al crear el producto', error})
 
