@@ -30,6 +30,7 @@ const createService = async (req, res) => {
         const newService =  new ModelService(req.body)
         await newService.save()
         res.status(201).json({msg:'Servicio creado correctamente', newService})
+     
     } catch (error) {
         res.status(500).json({msg: 'Hubo un error al crear el servicio', error})
     }
