@@ -1,5 +1,5 @@
 const {validationResult} = require('express-validator') 
-const ModelService = require('../models/services')
+const ModelPlan = require('../models/planes')
 
 const getAllServices = async (req, res) => {
     try {

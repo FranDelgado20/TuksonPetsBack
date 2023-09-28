@@ -1,6 +1,6 @@
 const express = require('express')
 const {check} = require('express-validator')
-const { getAllServices, getOneService, createService, editService, deleteService } = require('../controllers/services')
+const { getAllServices, getOneService, createService, editService, deleteService } = require('../controllers/planes')
 const router = express.Router()
 
 router.get('/', getAllServices)

@@ -15,7 +15,7 @@ class Server{
     routes(){
         this.app.use("/users", require("../routes/users"))
         this.app.use('/products', require('../routes/products'))
-        this.app.use("/service", require("../routes/services"))
+        this.app.use("/planes", require("../routes/planes"))
     }
     listen(){
         this.app.listen(process.env.PORT, () => {
