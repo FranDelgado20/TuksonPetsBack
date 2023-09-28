@@ -13,7 +13,8 @@ const getAllComments = async (req, res) => {
 };
 const createComments = async (req, res) => {
   const errors = validationResult(req);
-  if (!errors) {
+
+  if (!errors.isEmpty()) {
     return res.status(422).json({ msg: errors.array() });
   }
   try {
