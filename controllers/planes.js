@@ -3,12 +3,12 @@ const ModelPlan = require('../models/planes')
 
 const getAllPlans = async (req, res) => {
   try {
-    const allServices = await ModelPlan.find();
-    res.send(200).json({ msg: "Servicios encontrados", allServices });
+    const allPlans = await ModelPlan.find();
+    res.send(200).json({ msg: "Planes encontrados", allPlans });
   } catch (error) {
     res
       .status(500)
-      .json({ msg: "Hubo un error al obtener los servicios", error });
+      .json({ msg: "Hubo un error al obtener los planes", error });
   }
 };
 const getOnePlan = async (req, res) => {
@@ -17,12 +17,12 @@ const getOnePlan = async (req, res) => {
     return res.status(422).json({ msg: errors.array() });
   }
   try {
-    const oneService = await ModelPlan.findOne({ _id: req.params.id });
-    res.send(200).json({ msg: "Servicios encontrados", oneService });
+    const onePlan = await ModelPlan.findOne({ _id: req.params.id });
+    res.send(200).json({ msg: "Planes encontrados", onePlan });
   } catch (error) {
     res
       .status(500)
-      .json({ msg: "Hubo un error al obtener el servicios", error });
+      .json({ msg: "Hubo un error al obtener el plan", error });
   }
 };
 const createPlan = async (req, res) => {
@@ -31,11 +31,11 @@ const createPlan = async (req, res) => {
     return res.status(422).json({ msg: errors.array() });
   }
   try {
-    const newService = new ModelPlan(req.body);
-    await newService.save();
-    res.status(201).json({ msg: "Servicio creado correctamente", newService });
+    const onePlan = new ModelPlan(req.body);
+    await onePlan.save();
+    res.status(201).json({ msg: "Plan creado correctamente", onePlan });
   } catch (error) {
-    res.status(500).json({ msg: "Hubo un error al crear el servicio", error });
+    res.status(500).json({ msg: "Hubo un error al crear el plan", error });
   }
 };
 const editPlan = async (req, res) => {
@@ -44,16 +44,16 @@ const editPlan = async (req, res) => {
     return res.status(422).json({ msg: errors.array() });
   }
   try {
-    const serviceEdit = await ModelPlan.findByIdAndUpdate(
+    const planEdit = await ModelPlan.findByIdAndUpdate(
       { _id: req.params.id },
       req.body,
       { new: true }
     );
     res
       .status(200)
-      .json({ msg: "Servicio editado correctamente", serviceEdit });
+      .json({ msg: "Plan editado correctamente", planEdit });
   } catch (error) {
-    res.status(500).json({ msg: "Hubo un error al editar el servicio", error });
+    res.status(500).json({ msg: "Hubo un error al editar el plan", error });
   }
 };
 const deletePlan = async (req, res) => {
@@ -63,11 +63,11 @@ const deletePlan = async (req, res) => {
   }
   try {
     await ModelPlan.findByIdAndDelete({ _id: req.params.id });
-    res.status(200).json({ msg: "Servicio eliminado correctamente" });
+    res.status(200).json({ msg: "Plan eliminado correctamente" });
   } catch (error) {
     res
       .status(500)
-      .json({ msg: "Hubo un error al eliminar el servicio", error });
+      .json({ msg: "Hubo un error al eliminar el plan", error });
   }
 };
 module.exports = {

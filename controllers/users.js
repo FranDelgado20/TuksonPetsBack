@@ -2,6 +2,7 @@ const UserModel = require("../models/user");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { nuevaCuenta } = require("../utils/msgNodemailer");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -49,6 +50,7 @@ const createUser = async (req, res) => {
     await newUser.save();
 
     res.status(201).json({ msg: "Usuario creado correctamente", newUser });
+    nuevaCuenta(req.body.email)
   } catch (error) {
     res.status(500).json({ msg: "No se pudo crear el usuario", error });
   }
