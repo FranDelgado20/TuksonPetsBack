@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const ServiceSchema = new mongoose.Schema({
+const PlanSchema = new mongoose.Schema({
     nombre:{
         type:String,
         required:true
@@ -22,6 +22,6 @@ ServiceSchema.methods.toJSON = function() {
     const {__v, ...service} = this.toObject()
     return service
 }
-const ModelService = mongoose.model('servicios', ServiceSchema)
+const ModelPlan = mongoose.model('planes', ServiceSchema)
 
-module.exports=ModelService
+module.exports=ModelPlan

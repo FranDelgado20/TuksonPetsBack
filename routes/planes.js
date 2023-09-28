@@ -1,13 +1,13 @@
 const express = require('express')
 const {check} = require('express-validator')
-const { getAllServices, getOneService, createService, editService, deleteService } = require('../controllers/services')
+const { getAllPlans, getOnePlan, createPlan, editPlan, deletePlan } = require('../controllers/planes')
 const router = express.Router()
 
-router.get('/', getAllServices)
+router.get('/', getAllPlans)
 
 router.get('/:id', [
     check('id', 'Formato ID incorrecto').isMongoId()
-],getOneService)
+],getOnePlan)
 
 router.post('/', [
     check("nombre", "El campo nombre esta vacio").notEmpty(),
@@ -15,14 +15,14 @@ router.post('/', [
     check("descripcion", "El campo descripcion esta vacio").notEmpty(),
     check("imagen", "El campo imagen esta vacio").notEmpty(),
     check('precio',' El campo precio esta vacio').notEmpty()
-],createService)
+],createPlan)
 
 router.put('/:id', [
     check('id', 'Formato ID incorrecto').isMongoId()
-],editService)
+],editPlan)
 
 router.delete('/:id', [
     check('id', 'Formato ID incorrecto').isMongoId()
-],deleteService)
+],deletePlan)
 
 module.exports = router
