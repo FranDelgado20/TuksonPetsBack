@@ -18,6 +18,7 @@ class Server {
     this.app.use("/planes", require("../routes/planes"));
     this.app.use("/turns", require("../routes/turns"));
     this.app.use("/comments", require("../routes/comments"));
+    this.app.use("/pros", require("../routes/pros"));
   }
   listen() {
     this.app.listen(process.env.PORT, () => {
