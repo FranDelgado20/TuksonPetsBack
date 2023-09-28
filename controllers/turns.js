@@ -11,7 +11,8 @@ const getAllTurns = async (req, res) => {
 };
 const createTurn = async (req, res) => {
   const errors = validationResult(req);
-  if (!errors) {
+
+  if (!errors.isEmpty()) {
     return res.status(422).json({ msg: errors.array() });
   }
   try {
@@ -24,7 +25,8 @@ const createTurn = async (req, res) => {
 };
 const updateTurn = async (req, res) => {
   const errors = validationResult(req);
-  if (!errors) {
+
+  if (!errors.isEmpty()) {
     return res.status(422).json({ msg: errors.array() });
   }
   try {
@@ -40,7 +42,8 @@ const updateTurn = async (req, res) => {
 };
 const deleteTurn = async (req, res) => {
   const errors = validationResult(req);
-  if (!errors) {
+
+  if (!errors.isEmpty()) {
     return res.status(422).json({ msg: errors.array() });
   }
   try {
