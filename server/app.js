@@ -15,7 +15,7 @@ class Server {
   routes() {
     this.app.use("/users", require("../routes/users"));
     this.app.use("/products", require("../routes/products"));
-    this.app.use("/services", require("../routes/services"));
+    this.app.use("/planes", require("../routes/planes"));
     this.app.use("/turns", require("../routes/turns"));
     this.app.use("/comments", require("../routes/comments"));
   }
