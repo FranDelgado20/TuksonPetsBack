@@ -18,10 +18,10 @@ const PlanSchema = new mongoose.Schema({
     },
     
 })
-ServiceSchema.methods.toJSON = function() {
-    const {__v, ...service} = this.toObject()
-    return service
+PlanSchema.methods.toJSON = function() {
+    const {__v, ...plan} = this.toObject()
+    return plan
 }
-const ModelPlan = mongoose.model('planes', ServiceSchema)
+const ModelPlan = mongoose.model('planes', PlanSchema)
 
-module.exports=ModelPlan
+module.exports = ModelPlan
