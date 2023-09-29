@@ -13,11 +13,10 @@ const router = express.Router();
 router.get("/", auth("user" || "admin"), getAllTurns);
 router.post(
   "/",
-  auth("user" || "admin"),
   [
     check("nombrePaciente", "Campo nombre del paciente vacío").notEmpty(),
     check("nombreDueno", "Campo nombre del dueño vacío").notEmpty(),
-    check("servicio", "Campo servicio vacío").notEmpty(),
+    check("desc", "Campo detalles de la cita vacío").notEmpty(),
     check("tel", "Campo teléfono vacío").notEmpty(),
     check("vet", "Campo veterinario vacío").notEmpty(),
     check("fecha", "Campo fecha vacío").notEmpty(),

@@ -30,7 +30,7 @@ const updateTurn = async (req, res) => {
     return res.status(422).json({ msg: errors.array() });
   }
   try {
-    const turnEdit = await TurnModel.findOneAndUpdate(
+    const turnEdit = await TurnModel.findByIdAndUpdate(
       { _id: req.params.id },
       req.body,
       { new: true }
