@@ -50,7 +50,7 @@ const createUser = async (req, res) => {
     await newUser.save();
 
     res.status(201).json({ msg: "Usuario creado correctamente", newUser });
-    nuevaCuenta(req.body.email)
+    nuevaCuenta(newUser.email)
   } catch (error) {
     res.status(500).json({ msg: "No se pudo crear el usuario", error });
   }
