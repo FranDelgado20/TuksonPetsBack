@@ -5,7 +5,7 @@ const TurnSchema = new Schema({
     type: String,
     require: true,
   },
-  servicio: {
+  desc: {
     type: String,
     require: true,
   },
