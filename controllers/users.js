@@ -3,6 +3,8 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { nuevaCuenta } = require("../utils/msgNodemailer");
+const CartModel = require("../models/cart");
+
 
 const getAllUsers = async (req, res) => {
   try {
@@ -43,11 +45,17 @@ const createUser = async (req, res) => {
     }
 
     const newUser = new UserModel(req.body);
+    const newCart = new CartModel()
+
+    newUser.idCart = newCart._id
+    newCart.idUser = newUser._id
+
 
     const salt = bcrypt.genSaltSync();
     newUser.pass = await bcrypt.hash(req.body.pass, salt);
 
     await newUser.save();
+    await newCart.save()
 
     res.status(201).json({ msg: "Usuario creado correctamente", newUser });
     nuevaCuenta(newUser.email)
