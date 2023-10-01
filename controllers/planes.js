@@ -6,7 +6,7 @@ const { mensajePlan } = require('../utils/msgNodemailer');
 const getAllPlans = async (req, res) => {
   try {
     const allPlans = await ModelPlan.find();
-    res.send(200).json({ msg: "Planes encontrados", allPlans });
+    res.status(200).json({ msg: "Planes encontrados", allPlans });
   } catch (error) {
     res
       .status(500)
@@ -21,7 +21,7 @@ const getOnePlan = async (req, res) => {
     }
   try {
     const onePlan = await ModelPlan.findOne({ _id: req.params.id });
-    res.send(200).json({ msg: "Planes encontrados", onePlan });
+    res.status(200).json({ msg: "Planes encontrados", onePlan });
   } catch (error) {
     res
       .status(500)
