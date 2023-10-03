@@ -30,6 +30,10 @@ const TurnSchema = new Schema({
     require: true,
     unique: true,
   },
+  raza: {
+    type: String,
+    require: true
+  }
 });
 
 TurnSchema.methods.toJSON = function () {
