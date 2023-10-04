@@ -25,6 +25,7 @@ router.post(
       min: 10,
       max: 10,
     }),
+    check("raza", "Campo raza y especie vacío").notEmpty(),
   ],
   createTurn
 );
@@ -37,6 +38,7 @@ router.put(
     check("servicio", "Campo servicio vacío").notEmpty(),
     check("fecha", "Campo fecha vacío").notEmpty(),
     check("hora", "Campo hora vacío").notEmpty(),
+    check("raza", "Campo raza y especie vacío").notEmpty(),
   ],
   updateTurn
 );
