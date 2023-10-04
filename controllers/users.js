@@ -33,15 +33,20 @@ const createUser = async (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
+    
     return res.status(422).json({ msg: errors.array() });
   }
   try {
     const emailExist = await UserModel.findOne({ email: req.body.email });
-
+    const telExist = await UserModel.findOne({phoneNumber: req.body.phoneNumber})
     if (emailExist) {
       return res
         .status(422)
         .json({ msg: "El Email ya se encuentra registrado" });
+    }else if(telExist){
+      return res
+      .status(422)
+      .json({ msg: "El Teléfono ya se encuentra registrado" })
     }
 
     const newUser = new UserModel(req.body);
