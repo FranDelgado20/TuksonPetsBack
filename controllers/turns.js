@@ -16,8 +16,19 @@ const createTurn = async (req, res) => {
     return res.status(422).json({ msg: errors.array() });
   }
   try {
+    const date = await TurnModel.findOne({
+      fecha: req.body.fecha,
+      hora: req.body.hora,
+    });
+
+    if (date) {
+      return res.status(422).json({
+        msg: "Turno no disponible. Esa fecha y hora ya se encuentra agendada",
+      });
+    }
     const newTurn = new TurnModel(req.body);
     await newTurn.save();
+
     res.status(201).json({ msg: "Turno creado correctamente", newTurn });
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al crear el turno", error });
