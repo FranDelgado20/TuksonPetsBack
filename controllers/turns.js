@@ -4,7 +4,7 @@ const TurnModel = require("../models/turns");
 const getAllTurns = async (req, res) => {
   try {
     const allTurns = await TurnModel.find();
-    res.send(200).json({ msg: "Turnos encontrados", allTurns });
+    res.status(200).json({ msg: "Turnos encontrados", allTurns });
   } catch (error) {
     res.status(500).json({ msg: "No se pudieron encontrar los turnos", error });
   }

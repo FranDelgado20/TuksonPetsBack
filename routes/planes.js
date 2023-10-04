@@ -7,7 +7,7 @@ router.get('/', getAllPlans)
 
 router.get('/:id', [
     check('id', 'Formato ID incorrecto').isMongoId()
-],getOnePlan)
+], getOnePlan)
 
 router.post('/', [
     check("nombre", "El campo nombre esta vacio").notEmpty(),
@@ -15,7 +15,7 @@ router.post('/', [
     check("descripcion", "El campo descripcion esta vacio").notEmpty(),
     check("imagen", "El campo imagen esta vacio").notEmpty(),
     check('precio',' El campo precio esta vacio').notEmpty()
-],createPlan)
+], createPlan)
 
 router.post('/request', 
 [
@@ -30,14 +30,7 @@ router.post('/request',
       max: 220,
     }),
 
-],requestPlan )
+], requestPlan )
 
-router.put('/:id', [
-    check('id', 'Formato ID incorrecto').isMongoId()
-],editPlan)
-
-router.delete('/:id', [
-    check('id', 'Formato ID incorrecto').isMongoId()
-],deletePlan)
 
 module.exports = router

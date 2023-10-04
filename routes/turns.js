@@ -10,7 +10,7 @@ const {
 } = require("../controllers/turns");
 const router = express.Router();
 
-router.get("/", auth("user" || "admin"), getAllTurns);
+router.get("/", auth(["user", "admin"]), getAllTurns);
 router.post(
   "/",
   [
@@ -31,7 +31,7 @@ router.post(
 );
 router.put(
   "/:id",
-  auth("user" || "admin"),
+  auth(["user", "admin"]),
   [
     check("id", "Formato ID inválido").isMongoId(),
     check("nombrePaciente", "Campo nombre del paciente vacío").notEmpty(),
@@ -44,7 +44,7 @@ router.put(
 );
 router.delete(
   "/:id",
-  auth("user" || "admin"),
+  auth(["user", "admin"]),
   [check("id", "Formato ID inválido").isMongoId()],
   deleteTurn
 );
