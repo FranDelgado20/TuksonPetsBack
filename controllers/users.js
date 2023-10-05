@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const { nuevaCuenta } = require("../utils/msgNodemailer");
 const CartModel = require("../models/cart");
 
-
 const getAllUsers = async (req, res) => {
   try {
     const allUsers = await UserModel.find();
@@ -37,28 +36,36 @@ const createUser = async (req, res) => {
   }
   try {
     const emailExist = await UserModel.findOne({ email: req.body.email });
-
+    const telExist = await UserModel.findOne({
+      phoneNumber: req.body.phoneNumber,
+    });
     if (emailExist) {
       return res
         .status(422)
         .json({ msg: "El Email ya se encuentra registrado" });
+    } else if (telExist) {
+      return res
+        .status(422)
+        .json({ msg: "El Teléfono ya se encuentra registrado" });
     }
 
     const newUser = new UserModel(req.body);
-    const newCart = new CartModel()
 
-    newUser.idCart = newCart._id
-    newCart.idUser = newUser._id
+    if (req.body.role !== "admin") {
+      const newCart = new CartModel();
 
+      newUser.idCart = newCart._id;
+      newCart.idUser = newUser._id;
+      await newCart.save();
+    }
 
     const salt = bcrypt.genSaltSync();
     newUser.pass = await bcrypt.hash(req.body.pass, salt);
 
     await newUser.save();
-    await newCart.save()
 
     res.status(201).json({ msg: "Usuario creado correctamente", newUser });
-    nuevaCuenta(newUser.email)
+    nuevaCuenta(newUser.email);
   } catch (error) {
     res.status(500).json({ msg: "No se pudo crear el usuario", error });
   }

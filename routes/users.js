@@ -51,8 +51,6 @@ router.put(
   "/:id",
   [
     check("id", "Formato ID inválido").isMongoId(),
-    check("email", "Formato Email inválido").isEmail(),
-    check("email", "El campo Email vacío").notEmpty(),
     check("name", "El campo nombre y apellido vacío").notEmpty(),
     check(
       "name",
@@ -63,6 +61,7 @@ router.put(
       min: 10,
       max: 10,
     }),
+    check("role", "Campo rol del usuario vacío").notEmpty(),
   ],
   auth("admin"),
   updateUser
