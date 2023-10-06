@@ -17,7 +17,7 @@ const addProduct = async (req, res) => {
       (producto) => producto._id == req.params.idProd
     );
     if (prodExistente) {
-      return res.status(400).json({ msg: "PRODUCTO EXISTENTE", status: 400 });
+      return res.status(400).json({ msg: "El producto ya existe en el carrito", status: 400 });
     }
     cart.productos.push(prod);
     await cart.save();
