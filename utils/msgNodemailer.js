@@ -33,6 +33,17 @@ const mensajePlan = async (userEmail) => {
         `
     })
 }
+await new Promise((resolve, reject) => {
+    transporter.sendMail(mailData, (err, info) => {
+        if (err) {
+            console.error(err);
+            reject(err);
+        } else {
+            console.log(info);
+            resolve(info);
+        }
+    });
+});
 
 module.exports ={   
     nuevaCuenta,
