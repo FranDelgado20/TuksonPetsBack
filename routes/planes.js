@@ -26,7 +26,7 @@ router.post('/request',
     check("tel", "El campo teléfono esta vacio").notEmpty(),
     check("tel", "El formato es inválido, debe tener 10 caracteres").isLength({min:10, max:10}),
     check("mensaje", "Min 15 caracteres, Max de 220 caracteres").isLength({
-      min: 15,
+      min: 5,
       max: 220,
     }),
 

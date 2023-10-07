@@ -4,7 +4,6 @@ const RequestSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
   },
   nombreApellido: {
     type: String,
@@ -17,7 +16,6 @@ const RequestSchema = new mongoose.Schema({
   tel:{
     type:Number,
     required:true,
-    unique:true
   }
 });
 
