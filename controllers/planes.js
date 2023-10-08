@@ -1,7 +1,6 @@
 const {validationResult} = require('express-validator') 
 const ModelPlan = require('../models/planes');
 const ModelRequest = require('../models/requestPlan');
-const { sendPlanEmail } = require('../utils/msgNodemailer');
 
 const getAllPlans = async (req, res) => {
   try {
@@ -51,8 +50,8 @@ const requestPlan = async (req, res) => {
     try {
         const newRequest = new ModelRequest(req.body)
         await newRequest.save()
+
         res.status(201).json({msg:'Solicitud creada correctamente', newRequest}) 
-        sendPlanEmail(req.body.email)
     } catch (error) {
         res.status(500).json({ msg: "Hubo un error al crear la solicitud", error });
 
