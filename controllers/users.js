@@ -2,7 +2,6 @@ const UserModel = require("../models/user");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { nuevaCuenta } = require("../utils/msgNodemailer");
 const CartModel = require("../models/cart");
 
 const getAllUsers = async (req, res) => {
@@ -23,7 +22,7 @@ const getOneUser = async (req, res) => {
   }
   try {
     const oneUser = await UserModel.findOne({ _id: req.params.id });
-    res.status(200).json({ msg: "Usuaris encontrado", oneUser });
+    res.status(200).json({ msg: "Usuario encontrado", oneUser });
   } catch (error) {
     res.status(500).json({ msg: "No se pudo encontrar el usuario", error });
   }
@@ -46,7 +45,7 @@ const createUser = async (req, res) => {
     } else if (telExist) {
       return res
         .status(422)
-        .json({ msg: "El Teléfono ya se encuentra registrado" });
+        .json({ msg: "El número de teléfono ya se encuentra registrado" });
     }
 
     const newUser = new UserModel(req.body);
@@ -65,7 +64,6 @@ const createUser = async (req, res) => {
     await newUser.save();
 
     res.status(201).json({ msg: "Usuario creado correctamente", newUser });
-    nuevaCuenta(newUser.email);
   } catch (error) {
     res.status(500).json({ msg: "No se pudo crear el usuario", error });
   }
