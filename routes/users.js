@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/", auth("admin"), getAllUsers);
 router.get(
-  "/:id",
+  "/:id", auth(["user", "admin"]),
   [check("id", "Formado ID inválido").isMongoId()],
   getOneUser
 );
