@@ -60,9 +60,9 @@ const cartPay = async (req, res) => {
     const resPay = await mercadopago.preferences.create({
       items: prods,
       back_urls: {
-        success: `${process.env.URL_LOCAL}/?success`,
-        pending: `${process.env.URL_LOCAL}/?pending`,
-        failure: `${process.env.URL_LOCAL}/?failure`,
+        success: `${process.env.URL_DEPLOY}/?success`,
+        pending: `${process.env.URL_DEPLOY}/?pending`,
+        failure: `${process.env.URL_DEPLOY}/?failure`,
       },
     });
 
