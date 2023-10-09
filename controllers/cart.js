@@ -1,7 +1,6 @@
-
 const CartModel = require("../models/cart");
 const ModelProduct = require("../models/products");
-const mercadopago = require('mercadopago')
+const mercadopago = require("mercadopago");
 const getCart = async (req, res) => {
   try {
     const cart = await CartModel.findOne({ _id: req.params.id });
@@ -46,26 +45,37 @@ const deleteProduct = async (req, res) => {
   }
 };
 const cartPay = async (req, res) => {
-  
+  const { items } = req.body;
+
+  const prods = items.map((prod) => {
+    return {
+      title: prod.nombre,
+      unit_price: prod.precio,
+      quantity: prod.cantidad,
+      currency_id: "ARS",
+    };
+  });
   try {
-    mercadopago.configure({access_token: process.env.ACCESS_TOKEN})
+    mercadopago.configure({ access_token: process.env.ACCESS_TOKEN });
     const resPay = await mercadopago.preferences.create({
-      items: req.body,
-      back_urls:{
-      success:'https://tukson-pets.vercel.app'
-    }
-    })
-   
-    
-    res.status(200).json({ msg: "OK", resPay });
+      items: prods,
+      back_urls: {
+        success: `${process.env.URL_LOCAL}/?success`,
+        pending: `${process.env.URL_LOCAL}/?pending`,
+        failure: `${process.env.URL_LOCAL}/?failure`,
+      },
+    });
+
+    res
+      .status(200)
+      .json({ msg: "Solicitud de pago generada correctamente", resPay });
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al pagar", error });
   }
 };
-
 module.exports = {
   getCart,
   addProduct,
   deleteProduct,
-  cartPay
+  cartPay,
 };
