@@ -1,3 +1,4 @@
+const { default: MercadoPagoConfig, Payment } = require("mercadopago");
 const CartModel = require("../models/cart");
 const ModelProduct = require("../models/products");
 
@@ -17,7 +18,9 @@ const addProduct = async (req, res) => {
       (producto) => producto._id == req.params.idProd
     );
     if (prodExistente) {
-      return res.status(400).json({ msg: "El producto ya existe en el carrito", status: 400 });
+      return res
+        .status(400)
+        .json({ msg: "El producto ya existe en el carrito", status: 400 });
     }
     cart.productos.push(prod);
     await cart.save();
@@ -42,10 +45,12 @@ const deleteProduct = async (req, res) => {
     res.status(500).json({ msg: "Hubo un error al borrar el producto", error });
   }
 };
-const editProduct = async (req, res) => {
+const cartPay = async (req, res) => {
   try {
+    const client = new MercadoPagoConfig({ accessToken: process.env.ACCESS_TOKEN });
+    const payment = new Payment(client)
   } catch (error) {
-    res.status(500).json({ msg: "Hubo un error al editar el carrito", error });
+    res.status(500).json({ msg: "Hubo un error al pagar", error });
   }
 };
 
