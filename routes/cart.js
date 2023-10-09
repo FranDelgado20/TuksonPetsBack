@@ -3,8 +3,8 @@ const { getCart, addProduct, deleteProduct, cartPay } = require("../controllers/
 const auth = require("../middleware/auth");
 const router = express.Router();
 
-router.get("/:id", auth("user"), getCart);
-router.post("/:idCart/:idProd", auth("user"), addProduct);
+router.get("/:id", getCart);
+router.post("/:idCart/:idProd", addProduct);
 router.post("/pay", cartPay)
 router.delete("/:idCart/:idProd", auth("user"), deleteProduct);
 router.get('/pay/success')
