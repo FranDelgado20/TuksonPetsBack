@@ -4,7 +4,7 @@ const ModelComment = require("../models/comments");
 const getAllComments = async (req, res) => {
   try {
     const getComments = await ModelComment.find();
-    res.status(200).json({ msg: "Comentarios encontrados", getComments });
+    res.status(200).json({ msg: "Comentarios encontrados", getComments, status: 200 });
   } catch (error) {
     res
       .status(500)
@@ -20,7 +20,7 @@ const createComments = async (req, res) => {
   try {
     const newComment = new ModelComment(req.body);
     await newComment.save();
-    res.status(201).json({ msg: "Comentario creado con éxito", newComment });
+    res.status(201).json({ msg: "Comentario creado con éxito", newComment, status: 201 });
   } catch (error) {
     res
       .status(500)
