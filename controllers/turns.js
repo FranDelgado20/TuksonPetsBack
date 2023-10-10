@@ -4,7 +4,7 @@ const TurnModel = require("../models/turns");
 const getAllTurns = async (req, res) => {
   try {
     const allTurns = await TurnModel.find();
-    res.status(200).json({ msg: "Turnos encontrados", allTurns });
+    res.status(200).json({ msg: "Turnos encontrados", allTurns, status: 200 });
   } catch (error) {
     res.status(500).json({ msg: "No se pudieron encontrar los turnos", error });
   }
@@ -23,13 +23,13 @@ const createTurn = async (req, res) => {
 
     if (date) {
       return res.status(422).json({
-        msg: "Turno no disponible. Esa fecha y hora ya se encuentra agendada",
+        msg: "Turno no disponible. Esa fecha y hora ya se encuentra agendada", status: 422
       });
     }
     const newTurn = new TurnModel(req.body);
     await newTurn.save();
 
-    res.status(201).json({ msg: "Turno creado correctamente", newTurn });
+    res.status(201).json({ msg: "Turno creado correctamente", newTurn , status: 201});
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al crear el turno", error });
   }
@@ -46,7 +46,7 @@ const updateTurn = async (req, res) => {
       req.body,
       { new: true }
     );
-    res.status(200).json({ msg: "Turno editado correctamente", turnEdit });
+    res.status(200).json({ msg: "Turno editado correctamente", turnEdit, status: 200 });
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al editar el turno", error });
   }
@@ -59,7 +59,7 @@ const deleteTurn = async (req, res) => {
   }
   try {
     await TurnModel.findByIdAndDelete({ _id: req.params.id });
-    res.status(200).json({ msg: "Turno eliminado correctamente" });
+    res.status(200).json({ msg: "Turno eliminado correctamente", status: 200 });
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al eliminar el turno", error });
   }
