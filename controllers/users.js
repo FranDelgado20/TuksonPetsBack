@@ -92,9 +92,9 @@ const deleteUser = async (req, res) => {
     return res.status(422).json({ msg: errors.array() });
   }
   try {
-    await UserModel.findByIdAndDelete({ _id: req.params.id });
+   const deletedUser = await UserModel.findByIdAndDelete({ _id: req.params.id });
 
-    res.status(200).json({ msg: "Usuario eliminado correctamente", status: 200 });
+    res.status(200).json({ msg: "Usuario eliminado correctamente", deletedUser, status: 200 });
   } catch (error) {
     res.status(500).json({ msg: "No se pudo eliminar el usuario", error });
   }

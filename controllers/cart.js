@@ -39,7 +39,7 @@ const deleteProduct = async (req, res) => {
     );
     cart.productos.splice(prodIndex, 1);
     await cart.save();
-    res.status(200).json({ msg: "Producto eliminado", cart, status: 200 });
+    res.status(200).json({ msg: "Producto eliminado", status: 200 });
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al borrar el producto", error });
   }
@@ -60,9 +60,9 @@ const cartPay = async (req, res) => {
     const resPay = await mercadopago.preferences.create({
       items: prods,
       back_urls: {
-        success: `${process.env.URL_DEPLOY}/?success`,
-        pending: `${process.env.URL_DEPLOY}/?pending`,
-        failure: `${process.env.URL_DEPLOY}/?failure`,
+        success: `${process.env.URL_LOCAL}/cart/?success`,
+        pending: `${process.env.URL_LOCAL}/cart/?pending`,
+        failure: `${process.env.URL_LOCAL}/cart/?failure`,
       },
     });
 
