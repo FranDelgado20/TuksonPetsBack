@@ -67,9 +67,9 @@ const cartPay = async (req, res) => {
     const resPay = await mercadopago.preferences.create({
       items: prods,
       back_urls: {
-        success: `${process.env.URL_LOCAL}/cart/?success`,
-        pending: `${process.env.URL_LOCAL}/cart/?pending`,
-        failure: `${process.env.URL_LOCAL}/cart/?failure`,
+        success: `${process.env.URL_DEPLOY}/cart/?success`,
+        pending: `${process.env.URL_DEPLOY}/cart/?pending`,
+        failure: `${process.env.URL_DEPLOY}/cart/?failure`,
       },
     });
     const cart = await CartModel.findOne({_id: id})
