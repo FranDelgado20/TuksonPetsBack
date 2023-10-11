@@ -25,7 +25,6 @@ const addProduct = async (req, res) => {
     await cart.save();
     res.status(200).json({ msg: "Producto cargado correctamente", cart, status: 200 });
   } catch (error) {
-    console.log(error);
     res
       .status(500)
       .json({ msg: "Hubo un error al agregar un producto al carrito", error });
@@ -44,9 +43,17 @@ const deleteProduct = async (req, res) => {
     res.status(500).json({ msg: "Hubo un error al borrar el producto", error });
   }
 };
+const deleteCart = async(req, res) => {
+  try {
+    await CartModel.findByIdAndDelete({_id: req.params.idCart})
+    
+    res.status(200).json({msg:'Carrito eliminado correctamente', status: 200})
+  } catch (error) {
+    res.status(500).json({ msg: "Hubo un error al eliminar el carrito", error });
+  }
+}
 const cartPay = async (req, res) => {
-  const { items } = req.body;
-
+  const { items, id } = req.body;
   const prods = items.map((prod) => {
     return {
       title: prod.nombre,
@@ -65,7 +72,9 @@ const cartPay = async (req, res) => {
         failure: `${process.env.URL_LOCAL}/cart/?failure`,
       },
     });
-
+    const cart = await CartModel.findOne({_id: id})
+    cart.productos = []
+    await cart.save()
     res
       .status(200)
       .json({ msg: "Solicitud de pago generada correctamente", resPay, status:200  });
@@ -78,4 +87,5 @@ module.exports = {
   addProduct,
   deleteProduct,
   cartPay,
+  deleteCart
 };
