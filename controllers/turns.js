@@ -41,6 +41,16 @@ const updateTurn = async (req, res) => {
     return res.status(422).json({ msg: errors.array() });
   }
   try {
+    const date = await TurnModel.findOne({
+      fecha: req.body.fecha,
+      hora: req.body.hora,
+    });
+
+    if (date) {
+      return res.status(422).json({
+        msg: "Turno no disponible. Esa fecha y hora ya se encuentra agendada", status: 422
+      });
+    }
     const turnEdit = await TurnModel.findByIdAndUpdate(
       { _id: req.params.id },
       req.body,
