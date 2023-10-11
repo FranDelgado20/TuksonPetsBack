@@ -14,7 +14,7 @@ const getAllProductsPagination = async (req, res) => {
     ]);
     res
       .status(200)
-      .json({ msg: "Productos encontrados", products, count, limit });
+      .json({ msg: "Productos encontrados", products, count, limit, status: 200 });
   } catch (error) {
     res
       .status(500)
@@ -26,7 +26,7 @@ const getAllProducts = async (req, res) => {
   try {
     const allProducts = await ModelProduct.find();
 
-    res.status(200).json({ msg: "Productos encontrados", allProducts });
+    res.status(200).json({ msg: "Productos encontrados", allProducts, status: 200 });
   } catch (error) {
     res
       .status(500)
@@ -41,7 +41,7 @@ const getOneProducts = async (req, res) => {
   }
   try {
     const oneProduct = await ModelProduct.findOne({ _id: req.params.id });
-    res.status(200).json({ msg: "Producto encontrado", oneProduct });
+    res.status(200).json({ msg: "Producto encontrado", oneProduct, status:200 });
   } catch (error) {
     res
       .status(500)
@@ -58,7 +58,7 @@ const createProduct = async (req, res) => {
     const { body } = req;
     const newProduct = new ModelProduct(body);
     await newProduct.save();
-    res.status(201).json({ msg: "Producto creado correctamente", newProduct });
+    res.status(201).json({ msg: "Producto creado correctamente", newProduct, status: 201 });
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al crear el producto", error });
   }
@@ -77,7 +77,7 @@ const editProduct = async (req, res) => {
     );
     res
       .status(200)
-      .json({ msg: "Producto editado correctamente", productEdit });
+      .json({ msg: "Producto editado correctamente", productEdit, status: 200 });
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al editar el producto", error });
   }
@@ -90,7 +90,7 @@ const deleteProduct = async (req, res) => {
   }
   try {
     await ModelProduct.findByIdAndDelete({ _id: req.params.id });
-    res.status(200).json({ msg: "Producto eliminado correctamente" });
+    res.status(200).json({ msg: "Producto eliminado correctamente", status: 200 });
   } catch (error) {
     res
       .status(500)

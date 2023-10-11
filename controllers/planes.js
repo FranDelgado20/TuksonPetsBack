@@ -5,7 +5,7 @@ const ModelRequest = require('../models/requestPlan');
 const getAllPlans = async (req, res) => {
   try {
     const allPlans = await ModelPlan.find();
-    res.status(200).json({ msg: "Planes encontrados", allPlans });
+    res.status(200).json({ msg: "Planes encontrados", allPlans, status: 200 });
   } catch (error) {
     res
       .status(500)
@@ -20,7 +20,7 @@ const getOnePlan = async (req, res) => {
     }
   try {
     const onePlan = await ModelPlan.findOne({ _id: req.params.id });
-    res.status(200).json({ msg: "Planes encontrados", onePlan });
+    res.status(200).json({ msg: "Planes encontrados", onePlan, status: 200 });
   } catch (error) {
     res
       .status(500)
@@ -36,7 +36,7 @@ const createPlan = async (req, res) => {
   try {
     const onePlan = new ModelPlan(req.body);
     await onePlan.save();
-    res.status(201).json({ msg: "Plan creado correctamente", onePlan });
+    res.status(201).json({ msg: "Plan creado correctamente", onePlan, status: 201});
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al crear el plan", error });
   }
@@ -51,7 +51,7 @@ const requestPlan = async (req, res) => {
         const newRequest = new ModelRequest(req.body)
         await newRequest.save()
 
-        res.status(201).json({msg:'Solicitud creada correctamente', newRequest}) 
+        res.status(201).json({msg:'Solicitud creada correctamente', newRequest, status: 201}) 
     } catch (error) {
         res.status(500).json({ msg: "Hubo un error al crear la solicitud", error });
 
@@ -71,7 +71,7 @@ const editPlan = async (req, res) => {
     );
     res
       .status(200)
-      .json({ msg: "Plan editado correctamente", planEdit });
+      .json({ msg: "Plan editado correctamente", planEdit, status: 200 });
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al editar el plan", error });
   }
@@ -84,7 +84,7 @@ const deletePlan = async (req, res) => {
     }
   try {
     await ModelPlan.findByIdAndDelete({ _id: req.params.id });
-    res.status(200).json({ msg: "Plan eliminado correctamente" });
+    res.status(200).json({ msg: "Plan eliminado correctamente", status: 200});
   } catch (error) {
     res
       .status(500)

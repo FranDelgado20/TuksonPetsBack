@@ -4,7 +4,7 @@ const mercadopago = require("mercadopago");
 const getCart = async (req, res) => {
   try {
     const cart = await CartModel.findOne({ _id: req.params.id });
-    res.status(200).json({ cart });
+    res.status(200).json({ msg: "Carrito encontrado", cart, status: 200 });
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al obtener el carrito", error });
   }
@@ -23,7 +23,7 @@ const addProduct = async (req, res) => {
     }
     cart.productos.push(prod);
     await cart.save();
-    res.status(200).json({ msg: "Producto cargado correctamente", cart });
+    res.status(200).json({ msg: "Producto cargado correctamente", cart, status: 200 });
   } catch (error) {
     console.log(error);
     res
@@ -39,7 +39,7 @@ const deleteProduct = async (req, res) => {
     );
     cart.productos.splice(prodIndex, 1);
     await cart.save();
-    res.status(200).json({ msg: "Producto eliminado", cart });
+    res.status(200).json({ msg: "Producto eliminado", status: 200 });
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al borrar el producto", error });
   }
@@ -60,15 +60,15 @@ const cartPay = async (req, res) => {
     const resPay = await mercadopago.preferences.create({
       items: prods,
       back_urls: {
-        success: `${process.env.URL_DEPLOY}/?success`,
-        pending: `${process.env.URL_DEPLOY}/?pending`,
-        failure: `${process.env.URL_DEPLOY}/?failure`,
+        success: `${process.env.URL_LOCAL}/cart/?success`,
+        pending: `${process.env.URL_LOCAL}/cart/?pending`,
+        failure: `${process.env.URL_LOCAL}/cart/?failure`,
       },
     });
 
     res
       .status(200)
-      .json({ msg: "Solicitud de pago generada correctamente", resPay });
+      .json({ msg: "Solicitud de pago generada correctamente", resPay, status:200  });
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al pagar", error });
   }

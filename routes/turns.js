@@ -29,13 +29,12 @@ router.post(
   ],
   createTurn
 );
-router.put(
+router.put(   
   "/:id",
   auth(["user", "admin"]),
   [
     check("id", "Formato ID inválido").isMongoId(),
     check("nombrePaciente", "Campo nombre del paciente vacío").notEmpty(),
-    check("servicio", "Campo servicio vacío").notEmpty(),
     check("fecha", "Campo fecha vacío").notEmpty(),
     check("hora", "Campo hora vacío").notEmpty(),
     check("raza", "Campo raza y especie vacío").notEmpty(),
