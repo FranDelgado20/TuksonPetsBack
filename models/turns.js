@@ -1,6 +1,10 @@
 const { Schema, model } = require("mongoose");
 
 const TurnSchema = new Schema({
+  email: {
+    type: String,
+    required: true,
+  },
   nombrePaciente: {
     type: String,
     require: true,

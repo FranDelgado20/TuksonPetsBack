@@ -14,6 +14,7 @@ router.get("/", auth(["user", "admin"]), getAllTurns);
 router.post(
   "/",
   [
+    check("email", "Campo email vacío").notEmpty(),
     check("nombrePaciente", "Campo nombre del paciente vacío").notEmpty(),
     check("nombreDueno", "Campo nombre del dueño vacío").notEmpty(),
     check("desc", "Campo detalles de la cita vacío").notEmpty(),
@@ -35,8 +36,6 @@ router.put(
   [
     check("id", "Formato ID inválido").isMongoId(),
     check("nombrePaciente", "Campo nombre del paciente vacío").notEmpty(),
-    check("fecha", "Campo fecha vacío").notEmpty(),
-    check("hora", "Campo hora vacío").notEmpty(),
     check("raza", "Campo raza y especie vacío").notEmpty(),
   ],
   updateTurn
