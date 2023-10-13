@@ -112,7 +112,7 @@ const loginUser = async (req, res) => {
       return res.status(422).json({ msg: "El usuario no existe", status: 422 });
     }
 
-    const passCheck = bcrypt.compare(req.body.pass, userExist.pass);
+    const passCheck = await bcrypt.compare(req.body.pass, userExist.pass);
 
     if (passCheck) {
       const payload_jwt = {
