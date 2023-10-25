@@ -1,5 +1,10 @@
 const express = require("express");
-const { getAllComments, createComments } = require("../controllers/comments");
+const {
+  getAllComments,
+  createComments,
+  deleteComment,
+  editComment,
+} = require("../controllers/comments");
 const { check } = require("express-validator");
 const router = express.Router();
 
@@ -17,6 +22,16 @@ router.post(
     }),
   ],
   createComments
+);
+router.delete(
+  "/:id",
+  [check("id", "Formato ID incorrecto").isMongoId()],
+  deleteComment
+);
+router.put(
+  "/:id",
+  [check("id", "Formato ID incorrecto").isMongoId()],
+  editComment
 );
 
 module.exports = router;

@@ -56,11 +56,6 @@ router.put(
       "name",
       "Campo nombre y apellido: mínimo de 5 caracteres | Máximo de 75 caracteres"
     ).isLength({ min: 5, max: 75 }),
-    check("phoneNumber", "Campo número de teléfono vacío").notEmpty(),
-    check("phoneNumber", "Formato número de teléfono inválido").isLength({
-      min: 10,
-      max: 10,
-    }),
     check("role", "Campo rol del usuario vacío").notEmpty(),
   ],
   auth("admin"),
