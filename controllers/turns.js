@@ -23,13 +23,37 @@ const createTurn = async (req, res) => {
 
     if (date) {
       return res.status(422).json({
-        msg: "Turno no disponible. Esa fecha y hora ya se encuentra agendada", status: 422
+        msg: "Turno no disponible. Esa fecha y hora ya se encuentra agendada",
+        status: 422,
       });
     }
-    const newTurn = new TurnModel(req.body);
-    await newTurn.save();
+    const fechaActual = new Date();
+    fechaActual.setMinutes(fechaActual.getMinutes() - 180);
+    const anioActual = fechaActual.getFullYear();
+    const mesActual = fechaActual.getMonth() + 1;
+    const diaActual = fechaActual.getDate();
 
-    res.status(201).json({ msg: "Turno creado correctamente", newTurn , status: 201});
+    const fechaTurno = req.body.fecha.split("-");
+    const anioTurno = fechaTurno[0];
+    const mesTurno = fechaTurno[1];
+    const diaTurno = fechaTurno[2];
+
+    if (
+      anioTurno >= anioActual &&
+      mesTurno >= mesActual &&
+      diaTurno > diaActual
+    ) {
+      const newTurn = new TurnModel(req.body);
+      await newTurn.save();
+
+      res
+        .status(201)
+        .json({ msg: "Turno creado correctamente", newTurn, status: 201 });
+    } else {
+      res
+        .status(422)
+        .json({ msg: "La fecha ingresada es inválida", status: 422 });
+    }
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al crear el turno", error });
   }
@@ -48,7 +72,8 @@ const updateTurn = async (req, res) => {
 
     if (date) {
       return res.status(422).json({
-        msg: "Turno no disponible. Esa fecha y hora ya se encuentra agendada", status: 422
+        msg: "Turno no disponible. Esa fecha y hora ya se encuentra agendada",
+        status: 422,
       });
     }
     const turnEdit = await TurnModel.findByIdAndUpdate(
@@ -56,7 +81,9 @@ const updateTurn = async (req, res) => {
       req.body,
       { new: true }
     );
-    res.status(200).json({ msg: "Turno editado correctamente", turnEdit, status: 200 });
+    res
+      .status(200)
+      .json({ msg: "Turno editado correctamente", turnEdit, status: 200 });
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error al editar el turno", error });
   }
